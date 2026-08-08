@@ -258,3 +258,4 @@ python scripts/duplication_check.py --url http://localhost:9210
 - [x] Verification report added
 - [x] Dockerized run documented
 - [x] Demo video link added
+- [x] PR linked
