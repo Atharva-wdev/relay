@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<body>
+<h2>Workflows</h2>
+<table border="1">
+    <tr><th>ID</th><th>Name</th><th>Status</th></tr>
+    <tr th:each="w : ${workflows}">
+        <td th:text="${w.id}"></td>
+        <td th:text="${w.name}"></td>
+        <td th:text="${w.status}"></td>
+    </tr>
+</table>
+<a href="/ui/runs">Runs</a> | <a href="/ui/approvals">Approvals</a>
+</body>
+</html>

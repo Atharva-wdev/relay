@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<body>
+<h2>Pending Approvals</h2>
+<table border="1">
+    <tr><th>ID</th><th>Run</th><th>Message</th></tr>
+    <tr th:each="a : ${approvals}">
+        <td th:text="${a.id}"></td>
+        <td th:text="${a.runId}"></td>
+        <td th:text="${a.message}"></td>
+    </tr>
+</table>
+<a href="/ui/workflows">Workflows</a> | <a href="/ui/runs">Runs</a>
+</body>
+</html>

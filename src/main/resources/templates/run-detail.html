@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<body>
+<h2>Run Detail</h2>
+<div>
+    Run: <span th:text="${run != null ? run.runId : 'N/A'}"></span> |
+    Status: <span th:text="${run != null ? run.status : 'N/A'}"></span>
+</div>
+<table border="1">
+    <tr><th>Seq</th><th>Node</th><th>Type</th><th>Status</th><th>Attempt</th></tr>
+    <tr th:each="s : ${steps}">
+        <td th:text="${s.sequenceNo}"></td>
+        <td th:text="${s.nodeId}"></td>
+        <td th:text="${s.nodeType}"></td>
+        <td th:text="${s.status}"></td>
+        <td th:text="${s.attempt}"></td>
+    </tr>
+</table>
+<a href="/ui/runs">Back</a>
+</body>
+</html>

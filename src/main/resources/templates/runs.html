@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+<body>
+<h2>Runs</h2>
+<table border="1">
+    <tr><th>Run ID</th><th>Workflow</th><th>Status</th><th>Link</th></tr>
+    <tr th:each="r : ${runs}">
+        <td th:text="${r.runId}"></td>
+        <td th:text="${r.workflowId}"></td>
+        <td th:text="${r.status}"></td>
+        <td><a th:href="@{'/ui/runs/' + ${r.runId}}">open</a></td>
+    </tr>
+</table>
+<a href="/ui/workflows">Workflows</a> | <a href="/ui/approvals">Approvals</a>
+</body>
+</html>

@@ -1,0 +1,25 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/relay?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: db/migration
+
+relay:
+  authToken: demo-token
+  mockWorldUrl: http://localhost:9210
+  ai:
+    baseUrl: http://localhost:9001
+    apiKey: demo-key
+    model: alpha-small
