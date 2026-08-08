@@ -16,19 +16,20 @@ A resilient workflow orchestration service with durable execution, webhook trigg
 - Java 17+ (or project-required Java version)
 - Maven
 - Python 3
+- Docker (for containerized run)
 - Mock world service running on port `9210`
 
 ---
 
-## Run Instructions
+## Run Instructions (Local)
 
-## 1) Start mock world
+### 1) Start mock world
 
 Start the mock external system per project instructions so endpoints like `/admin/reset`, `/shipments`, `/tickets`, and `/admin/ledger` are available on:
 
 - `http://localhost:9210`
 
-## 2) Start Relay
+### 2) Start Relay
 
 ```bash
 mvn spring-boot:run
@@ -37,6 +38,59 @@ mvn spring-boot:run
 Relay should start on:
 
 - `http://localhost:8081`
+
+---
+
+## Dockerized Run
+
+### Prerequisites
+- Docker installed and running
+- Mock world running on host at `http://localhost:9210`
+
+### Build image
+
+```bash
+docker build -t relay-capstone:latest .
+```
+
+### Run container (Windows PowerShell)
+
+```powershell
+docker run --rm -p 8081:8081 `
+  -e MOCK_WORLD_BASE_URL=http://host.docker.internal:9210 `
+  relay-capstone:latest
+```
+
+### Run container (Linux/macOS)
+
+```bash
+docker run --rm -p 8081:8081 \
+  --add-host=host.docker.internal:host-gateway \
+  -e MOCK_WORLD_BASE_URL=http://host.docker.internal:9210 \
+  relay-capstone:latest
+```
+
+> `host.docker.internal` allows the containerized Relay app to call mock world running on your host machine.
+
+### Verify Dockerized app
+
+```bash
+curl -H "Authorization: Bearer demo-token" http://localhost:8081/workflows
+```
+
+### Smoke test against Dockerized app
+
+```bash
+python scripts/smoke_test.py --url http://localhost:8081 --token demo-token
+```
+
+### Stop container
+Press `Ctrl+C` in the terminal where `docker run` is active.
+
+### Troubleshooting
+- If Relay cannot reach mock world, ensure mock world is running on host `9210`.
+- On Linux, ensure `--add-host=host.docker.internal:host-gateway` is included.
+- If port `8081` is already in use, run container with `-p 8082:8081` and use `http://localhost:8082`.
 
 ---
 
@@ -156,7 +210,7 @@ This does not invalidate the durability/effect-once proof above, which was produ
 
 > Add your video URL here after upload:
 
-- `VIDEO_LINK_HERE`
+- `https://drive.google.com/file/d/1xUyvYLXxFLbLtlvNC-PUsB12a4X_A_h3/view?usp=sharing`
 
 ---
 
@@ -202,4 +256,5 @@ python scripts/duplication_check.py --url http://localhost:9210
 - [x] Crash/restart drill executed
 - [x] Exactly-once duplication check passed
 - [x] Verification report added
-- [ ] Demo video link added
+- [x] Dockerized run documented
+- [x] Demo video link added
